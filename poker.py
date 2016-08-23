@@ -1,10 +1,9 @@
-﻿import random
+import random
 suites = ['C', 'D', 'H', 'S'] #clubs, diamonds, hearts, spades
 ranks = ["Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
 "Nine", "Ten", "Jack", "Queen", "King", "Ace"]
 rank = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-plays = ["High", "Pair", "Two Pair", "Set", "Straight", "Flush", "Full
-House", "Quad", "Straight Flush", "Royal Flush"]
+plays = ["High", "Pair", "Two Pair", "Set", "Straight", "Flush", "Full House", "Quad", "Straight Flush", "Royal Flush"]
 table_cards = []
 
 class Card:
@@ -32,11 +31,9 @@ class Player:
         def __calculateHand(self):
                 first_cards = self.two_cards
                 if(len(table_cards) < 3):
-                        if ranks.index(first_cards[1].getRank()) >
-ranks.index(first_cards[2].getRank()): #check one high card pre-flop
+                        if ranks.index(first_cards[1].getRank()) >ranks.index(first_cards[2].getRank()): #check one high card pre-flop
                                 return (first_cards[1], "High")
-                        elif ranks.index(first_cards[1].getRank()) ==
-ranks.index(first_cards[2].getRank()): #check for pair pre-flop
+                        elif ranks.index(first_cards[1].getRank()) ==ranks.index(first_cards[2].getRank()): #check for pair pre-flop
                                 return (first_cards[1], "Pair")
                         else:
                                 return (first_cards[1], "High")
@@ -54,31 +51,22 @@ ranks.index(first_cards[2].getRank()): #check for pair pre-flop
                                         all_cards.insert(i, c)
 
                 all_suites = []
-                for i, val3 in enumerate(all_cards): #create a list of just suites
-(ordered least to gr)
+                for i, val3 in enumerate(all_cards): #create a list of just suites(ordered least to gr)
                         all_suites.append(val3.getSuite())
 
-                if all_suites.count(max(set(all_suites), key=all_suites.count)) >=
-5: #flush of some kind
+                if all_suites.count(max(set(all_suites), key=all_suites.count)) >=5: #flush of some kind
                         count = 1 #start 1 with a card already
                         i = 0
                         while i < len(all_cards)-1:
-                                if ((ranks.index(all_cards[i].getRank()) + 1 !=
-ranks.index(all_cards[i+1].getRank()) or #consecutive rank
-                                        #(i is not 0 and
-ranks.index(all_cards[len(all_cards)-1].getRank()) is not 12 and
-ranks.index(all_cards[0].getRank()) is not 0 or
+                                if ((ranks.index(all_cards[i].getRank()) + 1 !=ranks.index(all_cards[i+1].getRank()) or #consecutive rank
+                                        #(i is not 0 andranks.index(all_cards[len(all_cards)-1].getRank()) is not 12 and
+                                                ranks.index(all_cards[0].getRank()) is not 0 or
                                                 #suites.index(all_cards[len(all_cards)-1].getSuite()) is not
-suites.index(all_cards[0].getSuite()))) or #ace as 1
-                                                        suites.index(all_cards[i].getSuite()) is not
-suites.index(all_cards[i+1].getSuite())) and #same suite
-                                                                len(all_cards)-i <= 5): #enough cards left to still have a
-straight flush
-                                        if (not (i is len(all_cards)-1 and
-ranks.index(all_cards[len(all_cards)-1].getRank()) is 12 and
-ranks.index(all_cards[0].getRank()) is 0) or
-                                                (suites.index(all_cards[len(all_cards)-1].getSuite()) is not
-suites.index(all_cards[0].getSuite()))): #ace as 1
+                                                        suites.index(all_cards[0].getSuite()))) or #ace as 1
+                                                        suites.index(all_cards[i].getSuite()) is not suites.index(all_cards[i+1].getSuite())) and #same suite
+                                                                len(all_cards)-i <= 5): #enough cards left to still have a straight flush
+                                        if (not (i is len(all_cards)-1 and ranks.index(all_cards[len(all_cards)-1].getRank()) is 12 and ranks.index(all_cards[0].getRank()) is 0) or
+                                                (suites.index(all_cards[len(all_cards)-1].getSuite()) is not suites.index(all_cards[0].getSuite()))): #ace as 1
                                                 count += 1
                                                 high_card_84 = all_cards[i] #high card of the straight flush
                                                 break
@@ -91,21 +79,15 @@ suites.index(all_cards[0].getSuite()))): #ace as 1
                                         print("Royal Flush")
                                 return (high_card_84, "Straight Flush")
 
-                if all_indexes.count(max(set(all_indexes), key=all_indexes.count))
->= 4: #quads
-                        return (all_cards[all_indexes.index(max(set(all_indexes),
-key=all_indexes.count))], "Quad")
+                if all_indexes.count(max(set(all_indexes), key=all_indexes.count)) >= 4: #quads
+                        return (all_cards[all_indexes.index(max(set(all_indexes), key=all_indexes.count))], "Quad")
 
-                trips = list(set([x for x in all_indexes if all_indexes.count(x) ==
-3])) #triplets set
-                dupes = list(set([x for x in all_indexes if all_indexes.count(x) ==
-2])) #pairs
+                trips = list(set([x for x in all_indexes if all_indexes.count(x) == 3])) #triplets set
+                dupes = list(set([x for x in all_indexes if all_indexes.count(x) == 2])) #pairs
                 if len(trips) > 1: #full house
-                        return (all_cards[all_indexes.index(max(trips))],
-all_cards[all_indexes.index(min(trips))], "Full House", "and")
+                        return (all_cards[all_indexes.index(max(trips))], all_cards[all_indexes.index(min(trips))], "Full House", "and")
                 elif len(dupes) > 0 and len(trips) > 0:
-                        return (all_cards[all_indexes.index(trips[0])],
-all_cards[all_indexes.index(max(dupes))], "Full House", "of")
+                        return (all_cards[all_indexes.index(trips[0])], all_cards[all_indexes.index(max(dupes))], "Full House", "of")
 
                 flush_length = all_suites.count(max(set(all_suites), key=all_suites.count))
                 flush_type = list(set([x for x in all_suites if all_suites.count(x) >= 5]))
@@ -121,12 +103,9 @@ all_cards[all_indexes.index(max(dupes))], "Full House", "of")
                 count = 1
                 i = 0
                 while i < len(all_cards)-1:
-                        if ((ranks.index(all_cards[i].getRank()) + 1 !=
-ranks.index(all_cards[i+1].getRank()) and
+                        if ((ranks.index(all_cards[i].getRank()) + 1 != ranks.index(all_cards[i+1].getRank()) and
                                 len(all_cards)-i <= 5)):
-                                if not (i is len(all_cards)-1 and
-ranks.index(all_cards[len(all_cards)-1].getRank()) is 12 and
-ranks.index(all_cards[0].getRank()) is 0): #ace as 1
+                                if not (i is len(all_cards)-1 and ranks.index(all_cards[len(all_cards)-1].getRank()) is 12 and ranks.index(all_cards[0].getRank()) is 0): #ace as 1
                                         count += 1
                                         high_card_55 = all_cards[i] #high card of the straight
                                 break
@@ -141,9 +120,8 @@ ranks.index(all_cards[0].getRank()) is 0): #ace as 1
                         return (all_cards[all_indexes.index(trips[0])], "Set")
 
                 if len(dupes) > 1: #two pair
-                        return (all_cards[all_indexes.index(dupes[len(dupes)-1])], #two
-pair with one higher and one lower
-                                                all_cards[all_indexes.index(dupes[len(dupes)-2])], "Two Pair")
+                        return (all_cards[all_indexes.index(dupes[len(dupes)-1])], #two pair with one higher and one lower
+                                all_cards[all_indexes.index(dupes[len(dupes)-2])], "Two Pair")
 
                 elif len(dupes) is 1:
                         return (all_cards[all_indexes.index(dupes[0])], "Pair"); #one pair
@@ -202,10 +180,8 @@ if __name__ == "__main__":
                 card1 = Card(random.choice(ranks), random.choice(suites))
                 card2 = Card(random.choice(ranks), random.choice(suites))
                 nick = Player([card1, card2], None)
-                table_cards= [Card(random.choice(ranks), random.choice(suites)),
-Card(random.choice(ranks), random.choice(suites)),
-                        Card(random.choice(ranks), random.choice(suites)),
-Card(random.choice(ranks), random.choice(suites)),
+                table_cards= [Card(random.choice(ranks), random.choice(suites)), Card(random.choice(ranks), random.choice(suites)),
+                        Card(random.choice(ranks), random.choice(suites)), Card(random.choice(ranks), random.choice(suites)),
                                 Card(random.choice(ranks), random.choice(suites))]
                 printer = Print()
                 try:
